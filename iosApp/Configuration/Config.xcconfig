@@ -1,0 +1,7 @@
+TEAM_ID=
+
+PRODUCT_NAME=RecipeGrimoire
+PRODUCT_BUNDLE_IDENTIFIER=my.silentmode.recipegrimoire.RecipeGrimoire$(TEAM_ID)
+
+CURRENT_PROJECT_VERSION=1
+MARKETING_VERSION=1.0
