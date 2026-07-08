@@ -14,6 +14,10 @@ class MealViewModel : ViewModel() {
     val uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.Loading)
     val mealRepository: MealRepository = MealRepositoryImpl()
 
+    init {
+        fetchMeals()
+    }
+
     fun fetchMeals() {
         uiState.value = UiState.Loading
 

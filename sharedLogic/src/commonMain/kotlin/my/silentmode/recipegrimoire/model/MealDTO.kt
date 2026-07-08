@@ -4,32 +4,12 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MealResponse (
-    @SerialName("meals")
+data class MealResponse(
     val meals: List<MealDTO>
-){
-    fun toModel(): List<MealModel> {
-        return meals.map {
-            MealModel(
-                id = it.id,
-                name = it.name,
-                category = it.category,
-                country = it.country,
-                instructions = it.instructions,
-                thumbnail = it.thumbnail,
-                ingredient1 = it.ingredient1,
-                measure1 = it.measure1,
-                ingredient2 = it.ingredient2,
-                measure2 = it.measure2,
-                ingredient3 = it.ingredient3,
-                measure3 = it.measure3
-            )
-        }
-    }
-}
+)
 
 @Serializable
-data class MealDTO (
+data class MealDTO(
     @SerialName("idMeal")
     val id: String,
     @SerialName("strMeal")
@@ -54,4 +34,15 @@ data class MealDTO (
     val ingredient3: String,
     @SerialName("strMeasure3")
     val measure3: String
-)
+) {
+    fun toModel(): MealModel {
+        return MealModel(
+            id, name,
+            category, country,
+            instructions, thumbnail,
+            ingredient1, measure1,
+            ingredient2, measure2,
+            ingredient3, measure3
+        )
+    }
+}

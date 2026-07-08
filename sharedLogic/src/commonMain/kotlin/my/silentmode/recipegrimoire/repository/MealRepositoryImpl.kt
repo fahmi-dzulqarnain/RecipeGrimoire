@@ -17,7 +17,10 @@ class MealRepositoryImpl : MealRepository {
 
         if (response.status == HttpStatusCode.OK) {
             val mealResponse = response.body<MealResponse>()
-            return mealResponse.toModel()
+
+            return mealResponse.meals.map { meal ->
+                meal.toModel()
+            }
         }
 
         return listOf()
