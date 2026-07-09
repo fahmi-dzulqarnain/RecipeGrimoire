@@ -4,6 +4,8 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.flow.Flow
+import my.silentmode.recipegrimoire.cache.Database
+import my.silentmode.recipegrimoire.cache.createDriverFactory
 import my.silentmode.recipegrimoire.model.MealModel
 import my.silentmode.recipegrimoire.model.MealResponse
 
@@ -11,6 +13,7 @@ class MealRepositoryImpl : MealRepository {
     private val baseURL = "https://themealdb.com/api/json/v1/1"
     private val searchURL = "$baseURL/search.php?s="
     private val httpClient = createHttpClient()
+    private val database = Database(createDriverFactory())
 
     override suspend fun fetchMeals(mealName: String): List<MealModel> {
         val response = httpClient.get("${searchURL}${mealName}")
@@ -27,10 +30,16 @@ class MealRepositoryImpl : MealRepository {
     }
 
     override fun favorites(): Flow<List<MealModel>> {
-        TODO("Not yet implemented")
+        return database.getMealsAsFlow()
     }
 
-    override fun saveFavorite(meal: MealModel) {
-        TODO("Not yet implemented")
+    override fun saveFavorite(meal: MealModel): Int {
+        val insertedCount = database.insertMeal(meal)
+        return insertedCount
+    }
+
+    override fun removeFavorite(mealID: String): Int {
+        val deletedCount = database.removeMeal(mealID)
+        return deletedCount
     }
 }

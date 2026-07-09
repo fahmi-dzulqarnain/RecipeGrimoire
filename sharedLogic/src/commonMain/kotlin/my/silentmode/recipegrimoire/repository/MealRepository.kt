@@ -6,5 +6,6 @@ import my.silentmode.recipegrimoire.model.MealModel
 interface MealRepository {
     suspend fun fetchMeals(mealName: String): List<MealModel>
     fun favorites(): Flow<List<MealModel>>
-    fun saveFavorite(meal: MealModel)
+    fun saveFavorite(meal: MealModel): Int
+    fun removeFavorite(mealID: String): Int
 }

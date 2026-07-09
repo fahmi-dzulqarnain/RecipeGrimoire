@@ -43,6 +43,7 @@ kotlin {
             implementation(libs.ktor.serialization.json)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.kotlinx.coroutines.core)
+            implementation(libs.sqldelight.coroutines.extensions)
             implementation(libs.sqldelight.runtime)
         }
         commonTest.dependencies {
