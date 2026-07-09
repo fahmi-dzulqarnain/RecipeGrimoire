@@ -39,6 +39,8 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.viewmodel.navigation3)
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose.viewModel)
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.serialization.json)
             implementation(libs.ktor.client.content.negotiation)
@@ -47,9 +49,11 @@ kotlin {
             implementation(libs.sqldelight.runtime)
         }
         commonTest.dependencies {
+            implementation(libs.koin.test)
             implementation(libs.kotlin.test)
         }
         androidMain.dependencies {
+            implementation(libs.koin.android)
             implementation(libs.ktor.client.okhttp)
             implementation(libs.kotlinx.coroutines.android)
             implementation(libs.sqldelight.android.driver)

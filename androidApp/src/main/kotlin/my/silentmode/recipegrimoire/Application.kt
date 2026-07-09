@@ -1,11 +1,13 @@
 package my.silentmode.recipegrimoire
 
 import android.app.Application
-import my.silentmode.recipegrimoire.cache.AndroidContextHolder
+import org.koin.android.ext.koin.androidContext
 
 class Application : Application() {
     override fun onCreate() {
         super.onCreate()
-        AndroidContextHolder.applicationContext = this
+        initKoin {
+            androidContext(this@Application)
+        }
     }
 }

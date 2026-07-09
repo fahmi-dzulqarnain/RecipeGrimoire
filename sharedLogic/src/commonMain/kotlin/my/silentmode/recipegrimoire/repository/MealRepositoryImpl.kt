@@ -1,19 +1,20 @@
 package my.silentmode.recipegrimoire.repository
 
+import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.flow.Flow
 import my.silentmode.recipegrimoire.cache.Database
-import my.silentmode.recipegrimoire.cache.createDriverFactory
 import my.silentmode.recipegrimoire.model.MealModel
 import my.silentmode.recipegrimoire.model.MealResponse
 
-class MealRepositoryImpl : MealRepository {
+internal class MealRepositoryImpl(
+    private val httpClient: HttpClient,
+    private val database: Database
+) : MealRepository {
     private val baseURL = "https://themealdb.com/api/json/v1/1"
     private val searchURL = "$baseURL/search.php?s="
-    private val httpClient = createHttpClient()
-    private val database = Database(createDriverFactory())
 
     override suspend fun fetchMeals(mealName: String): List<MealModel> {
         val response = httpClient.get("${searchURL}${mealName}")

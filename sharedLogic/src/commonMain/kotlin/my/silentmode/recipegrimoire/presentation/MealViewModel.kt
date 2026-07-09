@@ -13,9 +13,8 @@ import my.silentmode.recipegrimoire.model.UiState
 import my.silentmode.recipegrimoire.repository.MealRepository
 import my.silentmode.recipegrimoire.repository.MealRepositoryImpl
 
-class MealViewModel : ViewModel() {
+class MealViewModel(private val mealRepository: MealRepository) : ViewModel() {
     val uiState: MutableStateFlow<UiState> = MutableStateFlow(UiState.Loading)
-    val mealRepository: MealRepository = MealRepositoryImpl()
     val favoriteIDs = mealRepository.favorites()
         .map { favorites -> favorites.map { it.id }.toSet() }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptySet())
