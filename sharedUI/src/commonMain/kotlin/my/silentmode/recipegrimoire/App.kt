@@ -88,10 +88,6 @@ fun App(viewModel: MealViewModel = MealViewModel()) {
                         }
                     }
                 }
-
-                else -> {
-
-                }
             }
         }
     }

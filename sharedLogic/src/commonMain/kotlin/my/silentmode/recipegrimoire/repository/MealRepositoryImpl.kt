@@ -29,4 +29,8 @@ class MealRepositoryImpl : MealRepository {
     override fun favorites(): Flow<List<MealModel>> {
         TODO("Not yet implemented")
     }
+
+    override fun saveFavorite(meal: MealModel) {
+        TODO("Not yet implemented")
+    }
 }
