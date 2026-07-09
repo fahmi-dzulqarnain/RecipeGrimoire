@@ -37,11 +37,9 @@ jobs:
                 key: ${{ runner.os }}-gradle-${{ hashFiles('android/**/*.gradle.kts', 'android/**/gradle-wrapper.properties') }}
                 restore-keys: |
                     ${{ runner.os }}-gradle-
-                    - name: Run Tests
-                    run: ./gradlew :sharedLogic:testAndroidHostTest
 
             - name: Run Tests
-              run: ./gradlew :sharedLogic:testAndroidHostTest
+              run: .gradlew/ allTests
             
             - name: Upload test reports
               if: always()
