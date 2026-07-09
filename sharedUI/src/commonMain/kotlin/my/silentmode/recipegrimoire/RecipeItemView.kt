@@ -29,7 +29,8 @@ fun RecipeItemView(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
+            .padding(8.dp)
+            .clickable { onClick(meal) },
         colors = CardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
                 .copy(alpha = 0.8f),

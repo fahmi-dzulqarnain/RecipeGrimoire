@@ -20,47 +20,55 @@ import my.silentmode.recipegrimoire.model.MealModel
 import my.silentmode.recipegrimoire.model.UiState
 import my.silentmode.recipegrimoire.presentation.MealViewModel
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun App(viewModel: MealViewModel = MealViewModel()) {
     MaterialTheme {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text("Recipe Grimoire")
+        var selectedMeal by remember { mutableStateOf<MealModel?>(null) }
+        val favoriteIDs by viewModel.favoriteIDs.collectAsState()
+        val uiState by viewModel.uiState.collectAsState()
+
+        if (selectedMeal == null) {
+
+            Column(
+                modifier = Modifier
+                    .background(MaterialTheme.colorScheme.primaryContainer)
+                    .safeContentPadding()
+                    .fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text("Recipe Grimoire")
+
+                RecipeListView(
+                    uiState = uiState,
+                    favoriteIDs = favoriteIDs,
+                    onFavoriteClick = {
+                        viewModel.toggleFavorite(selectedMeal!!)
+                    },
+                    onClick = {
+                        selectedMeal = it
+                    }
+                )
+                Spacer(modifier = Modifier.weight(1f))
+            }
+        } else {
+            selectedMeal?.let { meal ->
+                RecipeDetailView(
+                    modifier = Modifier
+                        .safeContentPadding()
+                        .padding(top = 24.dp),
+                    meal = meal,
+                    isFavorite = favoriteIDs.contains(meal.id),
+                    onFavoriteClick = {
+                        viewModel.toggleFavorite(meal)
+                    },
+                    onBackClick = {
+                        selectedMeal = null
                     }
                 )
             }
-        ) { innerPadding ->
-            var selectedMeal by remember { mutableStateOf<MealModel?>(null) }
-
-            if (selectedMeal == null) {
-                val favoriteIDs by viewModel.favoriteIDs.collectAsState()
-                val uiState by viewModel.uiState.collectAsState()
-
-                Column(
-                    modifier = Modifier
-                        .background(MaterialTheme.colorScheme.primaryContainer)
-                        .padding(innerPadding)
-                        .fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    RecipeListView(
-                        uiState = uiState,
-                        favoriteIDs = favoriteIDs,
-                        onFavoriteClick = {
-                            viewModel.toggleFavorite(selectedMeal!!)
-                        },
-                        onClick = {
-                            selectedMeal = it
-                        }
-                    )
-                    Spacer(modifier = Modifier.weight(1f))
-                }
-            }
-
         }
     }
 }
